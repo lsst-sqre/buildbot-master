@@ -1,0 +1,15 @@
+old-saved-nogit/
+.htpasswd
+twistd*
+http.log
+state.sqlite
+BbConfig.pyc
+builds/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# has password in it
+BbConfig.py
+README
