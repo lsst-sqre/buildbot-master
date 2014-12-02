@@ -34,9 +34,16 @@ class HipChatStatusPush(StatusReceiverMultiService):
     if self.localhost_replace:
       url = url.replace("//localhost", "//%s" % self.localhost_replace)
     buildProperties = build.getProperties()
-    realName, emailAddr = email_utils.parseaddr( buildProperties["email"] )
+    if "branches" in buildProperties:
+       branches = buildProperties["branches"] + " master"
+    else:
+       branches = "master"
+    if "email" in buildProperties:
+       realName, emailAddr = email_utils.parseaddr( buildProperties["email"] )
+       message = urllib.quote("<a href='%s'>%s</a> %s User: %s  Branches: %s" % (url, builderName, Results[result].upper(), realName, branches))
+    else:
+       message = urllib.quote("<a href='%s'>%s</a> %s " % (url, builderName, Results[result].upper()))
 
-    message = urllib.quote("<a href='%s'>%s</a> %s User:%s Branches:%s" % (url, builderName, Results[result].upper(), realName, buildProperties['branches']))
     if result == SUCCESS:
       color = "green"
       notify = "0"
